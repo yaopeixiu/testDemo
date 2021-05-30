@@ -1,15 +1,45 @@
+import constructorTest.Person;
+
 import java.io.*;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class test {
     public static void main(String[] args) throws NumberFormatException, IOException{
-//        System.out.println(getString());
-//        iteta();
-//        remove();
-        consumer();
+
+    }
+
+    /**
+     * 将时间格式2021-04-05T16:00:00.000Z转换为0000-00-00 00:00:00格式
+     * @param dateString  2021-04-05T16:00:00.000Z格式字符串
+     * @return
+     */
+    public static Date parseDate(String dateString){
+        dateString = dateString.replace("Z", " UTC");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS Z");
+        try {
+            Date d = format.parse(dateString);
+            return d;
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * BigDecimal相加
+     * @param v1
+     * @param v2
+     * @return
+     */
+    public static BigDecimal add(double v1,double v2){
+        BigDecimal b1 = new BigDecimal(Double.toString(v1));
+        BigDecimal b2 = new BigDecimal(Double.toString(v2));
+        return b1.add(b2);
     }
 
     /**
@@ -89,7 +119,60 @@ public class test {
                 new Person("猪八", 22, "男")
         ).forEach(consumer);
 
+        System.out.println(lisiList.stream());
+
         System.out.println(lisiList.toString());
+    }
+
+    /**
+     * Calendar.getInstance()用法
+     * @return
+     */
+    public static String getDate1(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 0);//控制时
+        cal.set(Calendar.MINUTE, 0);//控制分
+        cal.set(Calendar.SECOND, 0);//控制秒
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(cal.getTime());
+    }
+
+    //获取当天12点时间
+    public static String getDate2(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 12);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(cal.getTime());
+    }
+
+    //获取本周一0点时间
+    public static String getDate3(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(cal.getTime());
+    }
+
+    //获取本月第一天0点时间
+    public static String getDate4(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_MONTH,cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(cal.getTime());
+    }
+
+    //获得本月最后一天24点时间
+    public static String getDate5(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR),cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0,0);
+        cal.set(Calendar.DAY_OF_MONTH,cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(cal.getTime());
     }
 
 }

@@ -1,7 +1,9 @@
+package constructorTest;
+
 public class Person {
-    private String name;//姓名
-    private Integer age;//年龄
-    private String gender;//性别
+    public String name;//姓名
+    public Integer age;//年龄
+    public String gender;//性别
 
     public Person(String name, Integer age,String gender){
         this.age = age;
@@ -9,14 +11,23 @@ public class Person {
         this.gender = gender;
     }
 
+    public Person(){
+        this.name = "name9999";
+        System.out.println("这是父类Person的无参构造方法" + this.name);
+    }
+
     //重写toString，方便观看结果
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", gender='" + gender + '\'' +
-                '}';
+//    @Override
+//    public String toString() {
+//        return "constructorTest.Person{" +
+//                "name='" + name + '\'' +
+//                ", age=" + age +
+//                ", gender='" + gender + '\'' +
+//                '}';
+//    }
+
+    public void test(){
+        System.out.println("person test override");
     }
 
     public void setName(String name) {
